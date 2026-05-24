@@ -73,6 +73,12 @@ export const loginUser = async (
   if (error || !user) {
     throw new Error("Credenciales incorrectas");
   }
+  
+  const isPasswordValid = await comparePassword(passwordPlan, user.password_hash);
+  if (!isPasswordValid) {
+    throw new Error("Credenciales incorrectas");
+  }
+
   const token = generateToken({ id: user.id, email: user.email });
   const { password_hash, ...cleanUser } = user;
   return { user: cleanUser, token };
