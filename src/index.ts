@@ -33,6 +33,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/patient', patientRoutes);
 app.use('/api/qr', qrRoutes);
 
+// Ruta raíz para evitar 404 en chequeos de salud de Render
+app.get('/', (req, res) => {
+  res.status(200).send('API de QR Médico activa. Visite /api/health para verificar el estado.');
+});
+
 // Endpoint de prueba (Health check)
 app.get("/api/health", (req, res) => {
   sendSuccess(
